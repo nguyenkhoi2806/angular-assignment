@@ -1,16 +1,32 @@
-import { Component } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { Component, OnInit } from '@angular/core';
 import { AuthService } from 'app/services/auth/auth.service';
+import { User } from 'app/types/user';
+import { LoadingSpinnerComponent } from '../loading-spinner/loading-spinner.component';
 
 @Component({
   selector: 'header',
   standalone: true,
-  imports: [],
+  imports: [LoadingSpinnerComponent, CommonModule],
   templateUrl: './header.component.html',
 })
-export class HeaderComponent {
+export class HeaderComponent implements OnInit {
   isDropdownOpen = false;
+  userProfile: User | null;
+  loading: boolean = true;
 
-  constructor(private authService: AuthService) {}
+  constructor(private authService: AuthService) {
+    this.userProfile = null;
+  }
+
+  ngOnInit(): void {
+    setTimeout(() => {
+      this.userProfile = JSON.parse(
+        localStorage.getItem('user_profile') as string
+      );
+      this.loading = false;
+    }, 2000);
+  }
 
   toggleDropdown() {
     this.isDropdownOpen = !this.isDropdownOpen;
