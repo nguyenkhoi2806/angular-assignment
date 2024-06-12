@@ -2,10 +2,10 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from 'app/services/auth/auth.service';
 import { User } from 'app/types/user';
-import { LoadingSpinnerComponent } from '../loading-spinner/loading-spinner.component';
+import { LoadingSpinnerComponent } from '../../components/loading-spinner/loading-spinner.component';
 
 @Component({
-  selector: 'header',
+  selector: 'app-header',
   standalone: true,
   imports: [LoadingSpinnerComponent, CommonModule],
   templateUrl: './header.component.html',
@@ -25,7 +25,7 @@ export class HeaderComponent implements OnInit {
         localStorage.getItem('user_profile') as string
       );
       this.loading = false;
-    }, 2000);
+    }, 1000);
   }
 
   toggleDropdown() {

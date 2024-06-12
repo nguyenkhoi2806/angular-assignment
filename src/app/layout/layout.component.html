@@ -1,0 +1,11 @@
+<div class="flex">
+  <app-sidebar
+    class="fixed left-0 top-0 w-64 h-full bg-[#f8f4f3] p-4 z-50 transition-transform"
+  ></app-sidebar>
+  <main
+    class="w-full md:w-[calc(100%-256px)] md:ml-64 bg-gray-200 min-h-screen transition-all"
+  >
+    <app-header></app-header>
+    <router-outlet></router-outlet>
+  </main>
+</div>
