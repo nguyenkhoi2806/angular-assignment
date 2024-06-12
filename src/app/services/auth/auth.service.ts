@@ -1,14 +1,14 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { Observable, BehaviorSubject } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { catchError, map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
-  private baseUrl: string = 'http://your-api-url.com';
+  private baseUrl: string = 'https://api.escuelajs.co/api/v1/auth';
   private loggedIn = new BehaviorSubject<boolean>(false);
 
   constructor(private http: HttpClient, private router: Router) {
@@ -20,8 +20,8 @@ export class AuthService {
       .post<any>(`${this.baseUrl}/login`, { email, password })
       .pipe(
         map((response) => {
-          if (response.token) {
-            localStorage.setItem('auth_token', response.token);
+          if (response.access_token) {
+            localStorage.setItem('auth_token', response.access_token);
             this.loggedIn.next(true);
           }
           return response;

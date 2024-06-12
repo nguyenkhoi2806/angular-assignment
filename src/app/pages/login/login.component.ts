@@ -1,10 +1,36 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
+import { FormsModule } from '@angular/forms';
+
+import { AuthService } from 'app/services/auth/auth.service';
+import { finalize } from 'rxjs';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [],
+  imports: [FormsModule],
   templateUrl: './login.component.html',
-  styleUrl: './login.component.scss',
 })
-export class LoginComponent {}
+export class LoginComponent {
+  email: string = '';
+  password: string = '';
+  isSubmitTing: boolean = false;
+
+  constructor(private authService: AuthService, private router: Router) {}
+
+  login(): void {
+    this.isSubmitTing = true;
+    this.authService.login(this.email, this.password).subscribe(
+      (response) => {
+        if (response.access_token) {
+          this.router.navigate(['/dashboard']);
+        }
+      },
+      (error) => {
+        this.isSubmitTing = false;
+        console.error(error);
+        alert('Login failed');
+      }
+    );
+  }
+}
