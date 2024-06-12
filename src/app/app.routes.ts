@@ -12,10 +12,11 @@ export const routes: Routes = [
   {
     path: '',
     component: LayoutComponent,
+    canActivate: [AuthGuard],
     children: [
-      { path: 'home', component: DashboardComponent, canActivate: [AuthGuard] },
-      { path: 'task', component: TaskComponent, canActivate: [AuthGuard] },
+      { path: 'home', component: DashboardComponent },
+      { path: 'task', component: TaskComponent },
     ],
   },
-  { path: '**', redirectTo: 'home' },
+  { path: '**', redirectTo: '' },
 ];
