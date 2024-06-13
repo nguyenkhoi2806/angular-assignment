@@ -3,5 +3,5 @@ export type Task = {
   title: string;
   description: string;
   dueDate: string;
-  status: boolean;
+  status: string;
 };
