@@ -1,6 +1,9 @@
 import { CommonModule, NgClass } from '@angular/common';
+import { Router } from '@angular/router';
 import { Component } from '@angular/core';
 import { FormsModule, NgForm, ReactiveFormsModule } from '@angular/forms';
+
+import { SnackbarState } from 'app/components/snackbar/snackbar.state';
 import { TaskService } from 'app/services/task/task.service';
 import { Task } from 'app/types/task';
 
@@ -19,14 +22,37 @@ export class TaskFormComponent {
     dueDate: '',
   };
 
-  constructor(private taskService: TaskService) {}
+  constructor(private taskService: TaskService, private router: Router) {}
 
   onSubmit(form: NgForm): void {
     if (form.invalid) {
       this.markFormTouched(form);
       return;
     }
-    this.taskService.addTask(this.task);
+    this.taskService.addTask(this.task).subscribe({
+      complete: () => {
+        SnackbarState.update((currentSnackbar) => {
+          return {
+            ...currentSnackbar,
+            visible: true,
+            type: 'warning',
+            title: 'Success',
+            description: 'Task added successfully!',
+          };
+        });
+        this.router.navigate(['/tasks']);
+      },
+      error: () =>
+        SnackbarState.update((currentSnackbar) => {
+          return {
+            ...currentSnackbar,
+            visible: true,
+            type: 'error',
+            title: 'Error',
+            description: 'Plesase try again',
+          };
+        }),
+    });
   }
 
   markFormTouched(form: NgForm) {
