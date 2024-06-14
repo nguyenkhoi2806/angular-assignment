@@ -1,4 +1,4 @@
-<td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+<td class="px-5 py-5 border-b text-sm">
   <div class="flex items-center">
     <div class="group relative flex">
       <span class="text-gray-900 line-clamp-1">
@@ -12,7 +12,7 @@
     </div>
   </div>
 </td>
-<td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+<td class="px-5 py-5 border-b text-sm">
   <div class="group relative flex">
     <p
       class="group relative text-gray-900 line-clamp-1 hover:text-clip whitespace-no-wrap"
@@ -26,23 +26,23 @@
     >
   </div>
 </td>
-<td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+<td class="px-5 py-5 border-b">
   <p class="text-gray-900 whitespace-no-wrap">
     {{ dateUtil.formatDate(task.dueDate, "dd-MM-yyyy") }}
   </p>
 </td>
-<td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+<td class="px-5 py-5 border-b text-sm">
   <span
-    class="relative inline-block px-3 py-1 font-semibold text-green-900 leading-tight"
-  >
-    <span
-      aria-hidden
-      class="absolute inset-0 bg-green-200 opacity-50 rounded-full"
-    ></span>
-    <span class="relative">{{ task.status }}</span>
+    class="relative inline-block px-3 py-1 rounded-full text-white"
+    [ngClass]="{
+      'bg-green-500 ': task.status === 'low',
+      'bg-yellow-500 ': task.status === 'medium',
+      'bg-red-500 ': task.status === 'high'
+    }"
+    >{{ task.status }}
   </span>
 </td>
-<td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+<td class="px-5 py-5 border-b text-sm">
   <div class="flex items-end gap-3">
     <a routerLink="/tasks/{{ task.id }}">
       <button
