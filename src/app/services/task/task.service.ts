@@ -40,7 +40,7 @@ export class TaskService {
     if (index !== -1) {
       tasks[index] = task;
       localStorage.setItem(this.storageKey, JSON.stringify(tasks));
-      return of(task);
+      return of(task).pipe(delay(200));
     }
     return of(null);
   }

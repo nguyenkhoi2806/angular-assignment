@@ -19,6 +19,7 @@ export const routes: Routes = [
       { path: 'home', component: DashboardComponent },
       { path: 'tasks', component: TaskComponent },
       { path: 'tasks/create', component: TaskFormComponent },
+      { path: 'tasks/:id', component: TaskFormComponent },
     ],
   },
   { path: '**', redirectTo: '' },

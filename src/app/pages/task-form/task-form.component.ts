@@ -1,5 +1,5 @@
 import { CommonModule, NgClass } from '@angular/common';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Component } from '@angular/core';
 import {
   FormsModule,
@@ -28,14 +28,33 @@ export class TaskFormComponent {
     dueDate: '',
   };
   minDate: string;
+  isNewTask: boolean = true;
 
   constructor(
     private taskService: TaskService,
     private router: Router,
     private notificationService: NotificationService,
-    public dateUtil: DateUtil
+    public dateUtil: DateUtil,
+    private route: ActivatedRoute
   ) {
     this.minDate = this.dateUtil.getCurrentDate();
+  }
+
+  ngOnInit(): void {
+    this.route.params.subscribe((params) => {
+      if (params['id']) {
+        this.isNewTask = false;
+        const taskId = Number(params['id']);
+        this.taskService.getTask(taskId).subscribe(
+          (task) => {
+            this.task = { ...task! };
+          },
+          (error) => {
+            console.error('Error fetching task:', error);
+          }
+        );
+      }
+    });
   }
 
   onSubmit(form: NgForm): void {
@@ -43,7 +62,11 @@ export class TaskFormComponent {
       this.markFormTouched(form);
       return;
     }
-    this.taskService.addTask(this.task).subscribe({
+    const taskObservable = this.isNewTask
+      ? this.taskService.addTask(this.task)
+      : this.taskService.updateTask(this.task);
+
+    taskObservable.subscribe({
       complete: () => {
         this.notificationService.show('Save successfully!', 'success');
         this.router.navigate(['/tasks']);
