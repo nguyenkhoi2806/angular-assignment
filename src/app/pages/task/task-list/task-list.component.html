@@ -4,22 +4,22 @@
       <thead>
         <tr>
           <th
-            class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider"
+            class="w-[30%] px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider"
           >
             Title
           </th>
           <th
-            class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider"
+            class="w-[50%] px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider"
           >
             Description
           </th>
           <th
-            class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider"
+            class="w-[10%] px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider"
           >
             Due date
           </th>
           <th
-            class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider"
+            class="w-[10%] px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider"
           >
             Status
           </th>
@@ -28,9 +28,24 @@
           ></th>
         </tr>
       </thead>
-      <tbody>
-        <tr *ngFor="let task of tasks" app-task-item [task]="task"></tr>
+      <tbody *ngIf="tasks && tasks.length > 0; else noTasks">
+        <tr
+          *ngFor="let task of tasks"
+          app-task-item
+          [task]="task"
+          (deleteTask)="onDeleteTask($event)"
+        ></tr>
       </tbody>
+      <ng-template #noTasks>
+        <tr>
+          <td
+            colspan="5"
+            class="px-5 py-3 border-b border-gray-200 text-center text-base"
+          >
+            No tasks available.
+          </td>
+        </tr>
+      </ng-template>
     </table>
     <div
       class="px-5 py-5 bg-white border-t flex flex-col xs:flex-row items-center xs:justify-between"

@@ -6,7 +6,6 @@ import {
   Output,
   Renderer2,
 } from '@angular/core';
-import { PortalModule } from '@angular/cdk/portal';
 
 @Component({
   selector: 'app-confirm-modal',
