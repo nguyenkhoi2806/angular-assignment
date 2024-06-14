@@ -45,3 +45,10 @@
     </div>
   </div>
 </div>
+
+<app-confirm-modal
+  *ngIf="true"
+  (confirmed)="(null)"
+  (closed)="(null)"
+  message="Are you sure to delete this item"
+></app-confirm-modal>
