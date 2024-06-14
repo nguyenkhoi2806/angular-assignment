@@ -1,11 +1,17 @@
 import { CommonModule, NgClass } from '@angular/common';
 import { Router } from '@angular/router';
 import { Component } from '@angular/core';
-import { FormsModule, NgForm, ReactiveFormsModule } from '@angular/forms';
+import {
+  FormsModule,
+  NgForm,
+  NgModel,
+  ReactiveFormsModule,
+} from '@angular/forms';
 
-import { SnackbarState } from 'app/components/snackbar/snackbar.state';
 import { TaskService } from 'app/services/task/task.service';
 import { Task } from 'app/types/task';
+import { NotificationService } from 'app/services/notification/notification.service';
+import { DateUtil } from 'app/utils/date.util';
 
 @Component({
   selector: 'app-task-form',
@@ -21,8 +27,16 @@ export class TaskFormComponent {
     description: '',
     dueDate: '',
   };
+  minDate: string;
 
-  constructor(private taskService: TaskService, private router: Router) {}
+  constructor(
+    private taskService: TaskService,
+    private router: Router,
+    private notificationService: NotificationService,
+    public dateUtil: DateUtil
+  ) {
+    this.minDate = this.dateUtil.getCurrentDate();
+  }
 
   onSubmit(form: NgForm): void {
     if (form.invalid) {
@@ -31,27 +45,10 @@ export class TaskFormComponent {
     }
     this.taskService.addTask(this.task).subscribe({
       complete: () => {
-        SnackbarState.update((currentSnackbar) => {
-          return {
-            ...currentSnackbar,
-            visible: true,
-            type: 'warning',
-            title: 'Success',
-            description: 'Task added successfully!',
-          };
-        });
+        this.notificationService.show('Save successfully!', 'success');
         this.router.navigate(['/tasks']);
       },
-      error: () =>
-        SnackbarState.update((currentSnackbar) => {
-          return {
-            ...currentSnackbar,
-            visible: true,
-            type: 'error',
-            title: 'Error',
-            description: 'Plesase try again',
-          };
-        }),
+      error: () => this.notificationService.show('Please try again', 'error'),
     });
   }
 
@@ -59,5 +56,20 @@ export class TaskFormComponent {
     Object.values(form.controls).forEach((control) => {
       control.markAsTouched();
     });
+  }
+
+  validateDate(dueDate: NgModel) {
+    const selectedDate = new Date(dueDate.value);
+    const currentDate = new Date();
+
+    if (isNaN(selectedDate.getTime())) {
+      dueDate.control.setErrors({ invalidDate: true });
+    } else {
+      if (selectedDate < currentDate) {
+        dueDate.control.setErrors({ pastDate: true });
+      } else {
+        dueDate.control.setErrors(null);
+      }
+    }
   }
 }

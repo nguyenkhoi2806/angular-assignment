@@ -1,4 +1,4 @@
-import { Observable, of } from 'rxjs';
+import { delay, Observable, of } from 'rxjs';
 import { Injectable } from '@angular/core';
 
 import { Task } from 'app/types/task';
@@ -31,7 +31,7 @@ export class TaskService {
     task.id = tasks.length ? Math.max(...tasks.map((t) => t.id)) + 1 : 1;
     tasks.push(task);
     localStorage.setItem(this.storageKey, JSON.stringify(tasks));
-    return of(task);
+    return of(task).pipe(delay(200));
   }
 
   updateTask(task: Task): Observable<any> {

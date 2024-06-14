@@ -1,11 +1,11 @@
 <form (ngSubmit)="onSubmit(actorForm)" #actorForm="ngForm">
-  <div class="space-y-12 p-10">
+  <div class="space-y-12 p-10 md:w-6/12 w-full">
     <div class="border-b border-gray-900/10 p-5 bg-white">
       <h2 class="text-base font-semibold leading-7 text-gray-900">
         Task Information
       </h2>
       <div class="mt-5 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
-        <div class="sm:col-span-3">
+        <div class="sm:col-span-12">
           <label
             for="title"
             class="block text-sm font-medium leading-6 text-gray-900"
@@ -41,15 +41,14 @@
             </div>
           </div>
         </div>
-        <div class="sm:col-span-3">
+        <div class="sm:col-span-12">
           <label
             for="description"
             class="block text-sm font-medium leading-6 text-gray-900"
             >Description</label
           >
           <div class="mt-2">
-            <input
-              type="text"
+            <textarea
               name="description"
               id="description"
               minlength="10"
@@ -65,7 +64,7 @@
                   ? 'border-red-500 border'
                   : 'border-0'
               "
-            />
+            ></textarea>
             <div
               *ngIf="
                 description.invalid &&
@@ -82,7 +81,7 @@
             </div>
           </div>
         </div>
-        <div class="sm:col-span-3">
+        <div class="sm:col-span-4">
           <label
             for="due-date"
             class="block text-sm font-medium leading-6 text-gray-900"
@@ -95,12 +94,16 @@
               required
               type="date"
               [(ngModel)]="task.dueDate"
+              [min]="minDate"
+              (ngModelChange)="validateDate(dueDate)"
               #dueDate="ngModel"
               class="block w-full rounded-md p-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
               [ngClass]="
                 dueDate.invalid &&
                 (dueDate.dirty || dueDate.touched) &&
-                (dueDate.hasError('required') || dueDate.hasError('minlength'))
+                (dueDate.hasError('required') ||
+                  dueDate.errors?.pastDate ||
+                  dueDate.errors?.invalidDate)
                   ? 'border-red-500 border'
                   : 'border-0'
               "
@@ -112,10 +115,14 @@
               <div *ngIf="dueDate.hasError('required')">
                 Due date is required.
               </div>
+              <div *ngIf="dueDate.errors?.pastDate">
+                Due date cannot be in the past.
+              </div>
+              <div *ngIf="dueDate.errors?.invalidDate">Invalid date</div>
             </div>
           </div>
         </div>
-        <div class="sm:col-span-3">
+        <div class="sm:col-span-6">
           <label
             for="complete"
             class="block text-sm font-medium leading-6 text-gray-900"

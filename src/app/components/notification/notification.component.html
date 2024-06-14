@@ -1,0 +1,9 @@
+<div class="fixed bottom-4 right-4" *ngIf="notification">
+  <div
+    [ngClass]="bgClass"
+    class="text-white p-4 text-base rounded shadow-md flex items-center justify-between"
+  >
+    <span>{{ notification.message }}</span>
+    <button class="ml-4" (click)="close()">✕</button>
+  </div>
+</div>
