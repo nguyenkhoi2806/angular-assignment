@@ -4,7 +4,7 @@ import {
   NotificationType,
   NotificationService,
   Notification,
-} from 'app/services/notification/notification.service';
+} from 'app/services/notification.service';
 
 @Component({
   selector: 'app-notification',

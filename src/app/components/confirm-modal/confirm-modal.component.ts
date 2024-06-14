@@ -6,6 +6,7 @@ import {
   Output,
   Renderer2,
 } from '@angular/core';
+import { PortalModule } from '@angular/cdk/portal';
 
 @Component({
   selector: 'app-confirm-modal',
@@ -21,17 +22,12 @@ export class ConfirmModalComponent {
     this.renderer.setStyle(document.body, 'overflow', 'hidden');
   }
 
-  ngOnDestroy() {
-    this.renderer.setStyle(document.body, 'overflow', 'auto');
-  }
-
   confirm() {
     this.confirmed.emit(true);
-    this.closeModal();
   }
 
   closeModal() {
+    console.log('ok');
     this.closed.emit(true);
-    this.renderer.removeChild(document.body, this.el.nativeElement);
   }
 }

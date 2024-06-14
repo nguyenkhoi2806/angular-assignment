@@ -7,9 +7,11 @@ import { AuthService } from './services/auth/auth.service';
 import { AuthGuard } from './services/auth/auth.guard';
 import { provideHttpClient } from '@angular/common/http';
 import { DatePipe } from '@angular/common';
+import { PortalModule } from '@angular/cdk/portal';
 
 export const appConfig: ApplicationConfig = {
   providers: [
+    PortalModule,
     DatePipe,
     AuthService,
     AuthGuard,

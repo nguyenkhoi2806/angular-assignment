@@ -8,9 +8,9 @@ import {
   ReactiveFormsModule,
 } from '@angular/forms';
 
-import { TaskService } from 'app/services/task/task.service';
+import { TaskService } from 'app/services/task.service';
 import { Task } from 'app/types/task';
-import { NotificationService } from 'app/services/notification/notification.service';
+import { NotificationService } from 'app/services/notification.service';
 import { DateUtil } from 'app/utils/date.util';
 
 @Component({
