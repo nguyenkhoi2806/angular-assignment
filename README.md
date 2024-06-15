@@ -2,26 +2,29 @@
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 18.0.3.
 
-## Development server
+## Assignment
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+### Objective
 
-## Code scaffolding
+Develop a task management application using Angular and Tailwind CSS. The application should include features for user authentication, task creation, deletion, and filtering tasks by status.
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+### Requirements
 
-## Build
+1. **User Authentication**
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+   - Implement login and signup functionality.
+   - Validate user credentials and provide appropriate feedback on errors.
 
-## Running unit tests
+2. **Task Management**
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+   - Create, view, and delete tasks.
+   - Each task should have a title, description, due date, and status (e.g., low, medium, high).
+   - Implement filtering of tasks based on their status.
 
-## Running end-to-end tests
+3. **Search and Filter**
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+   - Implement a search feature to filter tasks by title and description.
+   - Include a dropdown to filter tasks by status.
 
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+4. **Styling**
+   - Use Tailwind CSS for styling the application.
