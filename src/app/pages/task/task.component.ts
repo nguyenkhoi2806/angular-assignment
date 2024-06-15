@@ -40,11 +40,6 @@ export class TaskComponent {
   applyFilter() {
     const searchTermLowerCase = this.searchTerm.toLowerCase().trim();
 
-    if (!searchTermLowerCase) {
-      this.filteredTasks = [...this.tasks];
-      return;
-    }
-
     this.filteredTasks = this.tasks.filter((task) => {
       const matchesStatus =
         this.searchStatus === 'all' ||
