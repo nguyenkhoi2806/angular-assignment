@@ -21,8 +21,8 @@
         <input
           class="bg-gray-50 outline-none ml-1 block"
           type="text"
-          name=""
-          id=""
+          [(ngModel)]="searchTerm"
+          (ngModelChange)="applyFilter()"
           placeholder="search..."
         />
       </div>
@@ -38,6 +38,9 @@
     </div>
   </div>
   <div>
-    <app-task-list></app-task-list>
+    <app-task-list
+      [tasks]="filteredTasks"
+      (loadTasks)="loadTasks()"
+    ></app-task-list>
   </div>
 </div>

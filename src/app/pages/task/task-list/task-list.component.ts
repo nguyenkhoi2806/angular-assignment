@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { ConfirmModalService } from 'app/services/confirm-modal.service';
 import { NotificationService } from 'app/services/notification.service';
 
@@ -14,23 +14,14 @@ import { TaskItemComponent } from '../task-item/task-item.component';
   templateUrl: './task-list.component.html',
 })
 export class TaskListComponent {
-  tasks: Task[] = [];
+  @Input() tasks: Task[] = [];
+  @Output() loadTasks = new EventEmitter<void>();
 
   constructor(
     private taskService: TaskService,
     private confirmalModalSerivce: ConfirmModalService,
     private notificationService: NotificationService
   ) {}
-
-  ngOnInit(): void {
-    this.loadTasks();
-  }
-
-  loadTasks(): void {
-    this.taskService.getTasks().subscribe((tasks) => {
-      this.tasks = tasks;
-    });
-  }
 
   onDeleteTask(taskId: number) {
     this.confirmalModalSerivce.openModal(
@@ -39,7 +30,7 @@ export class TaskListComponent {
         this.taskService.deleteTask(taskId).subscribe({
           complete: () => {
             this.notificationService.show('Delete successfully!', 'success');
-            this.loadTasks();
+            this.loadTasks.emit();
           },
         });
       }
