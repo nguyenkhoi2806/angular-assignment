@@ -20,6 +20,7 @@ import { TaskListComponent } from './task-list/task-list.component';
 })
 export class TaskComponent {
   tasks: Task[] = [];
+  searchStatus: string = 'all';
   filteredTasks: Task[] = [];
   searchTerm: string = '';
 
@@ -44,10 +45,15 @@ export class TaskComponent {
       return;
     }
 
-    this.filteredTasks = this.tasks.filter(
-      (task) =>
+    this.filteredTasks = this.tasks.filter((task) => {
+      const matchesStatus =
+        this.searchStatus === 'all' ||
+        task.status.toLowerCase() === this.searchStatus.toLowerCase();
+      const matchesSearchTerm =
+        !searchTermLowerCase ||
         task.title.toLowerCase().includes(searchTermLowerCase) ||
-        task.description.toLowerCase().includes(searchTermLowerCase)
-    );
+        task.description.toLowerCase().includes(searchTermLowerCase);
+      return matchesStatus && matchesSearchTerm;
+    });
   }
 }
