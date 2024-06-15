@@ -8,7 +8,7 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 
 Develop a task management application using Angular and Tailwind CSS. The application should include features for user authentication, task creation, deletion, and filtering tasks by status.
 
-### Requirements
+### Complete features
 
 1. **User Authentication**
 
@@ -28,3 +28,13 @@ Develop a task management application using Angular and Tailwind CSS. The applic
 
 4. **Styling**
    - Use Tailwind CSS for styling the application.
+
+### Uncomplete features
+
+1. **Task Notifications**
+
+2. **Collaborative Tasks**
+
+3. **Unit Testing**
+
+4. **User Profile**
