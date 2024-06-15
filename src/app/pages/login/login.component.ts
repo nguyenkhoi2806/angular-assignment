@@ -5,13 +5,17 @@ import {
   FormGroup,
   Validators,
   ReactiveFormsModule,
+  FormsModule,
 } from '@angular/forms';
+import { CommonModule } from '@angular/common';
+
 import { AuthService } from 'app/services/auth/auth.service';
+import { NotificationService } from 'app/services/notification.service';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [ReactiveFormsModule, RouterModule],
+  imports: [ReactiveFormsModule, RouterModule, FormsModule, CommonModule],
   templateUrl: './login.component.html',
 })
 export class LoginComponent {
@@ -21,7 +25,8 @@ export class LoginComponent {
   constructor(
     private fb: FormBuilder,
     private authService: AuthService,
-    private router: Router
+    private router: Router,
+    private notificationService: NotificationService
   ) {
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
@@ -49,8 +54,10 @@ export class LoginComponent {
         },
         (error) => {
           this.isSubmitting = false;
-          console.error(error);
-          alert('Login failed');
+          this.notificationService.show(
+            'Login failed. Please check your credentials and try again.',
+            'error'
+          );
         }
       );
     } else {
