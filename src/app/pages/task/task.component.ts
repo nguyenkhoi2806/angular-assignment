@@ -37,12 +37,17 @@ export class TaskComponent {
   }
 
   applyFilter() {
-    if (!this.searchTerm.trim()) {
+    const searchTermLowerCase = this.searchTerm.toLowerCase().trim();
+
+    if (!searchTermLowerCase) {
       this.filteredTasks = [...this.tasks];
       return;
     }
-    this.filteredTasks = this.tasks.filter((task) =>
-      task.title.toLowerCase().includes(this.searchTerm.toLowerCase())
+
+    this.filteredTasks = this.tasks.filter(
+      (task) =>
+        task.title.toLowerCase().includes(searchTermLowerCase) ||
+        task.description.toLowerCase().includes(searchTermLowerCase)
     );
   }
 }
