@@ -3,6 +3,7 @@ import { Routes } from '@angular/router';
 import { LoginComponent } from './pages/login/login.component';
 import { DashboardComponent } from './pages/dashboard/dashboard.component';
 import { TaskComponent } from './pages/task/task.component';
+import { SignupComponent } from './pages/signup/signup.component';
 import { TaskFormComponent } from './pages/task-form/task-form.component';
 
 import { LayoutComponent } from './layout/layout.component';
@@ -11,6 +12,7 @@ import { AuthGuard } from './services/auth/auth.guard';
 
 export const routes: Routes = [
   { path: 'login', component: LoginComponent },
+  { path: 'signup', component: SignupComponent },
   {
     path: '',
     component: LayoutComponent,
